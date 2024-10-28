@@ -24,9 +24,26 @@ playersRouter.get('/:id', async (request, response) => {
 })
 
 //Editar la información de un jugador:
-playersRouter.put('/', (request, response) => {})
+playersRouter.put('/:id', async (request, response) => {
+  const id = request.params.id
+  const objPlayer = request.body
+  try {
+    const newPlayer = await playersService.updatePlayer({ id, objPlayer })
+    response.json(newPlayer)
+  } catch (error) {
+    response.status(500).json({ message: error.message })
+  }
+})
 
 //Create a vos como jugador:
-playersRouter.post('/', (request, response) => {})
+playersRouter.post('/', async (request, response) => {
+  const objPlayer = request.body
+  try {
+    const newPlayer = await playersService.createPlayer(objPlayer)
+    response.status(201).json(newPlayer)
+  } catch (error) {
+    response.status(500).json({ message: error.message })
+  }
+})
 
 module.exports = playersRouter

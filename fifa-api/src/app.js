@@ -4,6 +4,7 @@ const { playersRouter } = require('./routes')
 
 const app = express()
 
+app.use(express.json())
 app.use('/api/players', playersRouter)
 
 app.listen(PORT, () => {

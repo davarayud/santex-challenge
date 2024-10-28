@@ -22,4 +22,22 @@ const getPlayer = async (id) => {
   }
 }
 
-module.exports = { getPlayers, getPlayer }
+const createPlayer = async (objPlayer) => {
+  try {
+    const newPlayer = await Player.create(objPlayer)
+    return newPlayer
+  } catch (error) {
+    throw error
+  }
+}
+
+const updatePlayer = async ({ id, objPlayer }) => {
+  try {
+    const newPlayer = await Player.update(objPlayer, { where: { id } })
+    return objPlayer
+  } catch (error) {
+    throw error
+  }
+}
+
+module.exports = { getPlayers, getPlayer, createPlayer, updatePlayer }
