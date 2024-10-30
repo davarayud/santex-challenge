@@ -13,11 +13,18 @@ const sequelize = new Sequelize(
   {
     host: HOST,
     dialect: 'mysql',
-    define: {
-      tableName: 'players',
-      timestamps: false,
-    },
   }
 )
 
-module.exports = sequelize
+const initializeDB = async () => {
+  try {
+    await sequelize.authenticate()
+    console.log(`Conectado a ${BASE_DE_DATOS}`)
+    const {} = require('../models')
+    await sequelize.sync({ force: false })
+  } catch (error) {
+    console.error('Hubo un error al inicializar la base de datos')
+  }
+}
+
+module.exports = { sequelize, initializeDB }

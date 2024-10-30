@@ -33,8 +33,12 @@ const createPlayer = async (objPlayer) => {
 
 const updatePlayer = async ({ id, objPlayer }) => {
   try {
-    const newPlayer = await Player.update(objPlayer, { where: { id } })
-    return objPlayer
+    await Player.update(objPlayer, { where: { id } })
+    const newPlayer = await Player.findByPk(id)
+    if (!newPlayer) {
+      throw new Error('Player no encontrado')
+    }
+    return newPlayer
   } catch (error) {
     throw error
   }

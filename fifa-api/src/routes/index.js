@@ -1,3 +1,4 @@
-const playersRouter = require('./players')
+const playersRouter = require('./playersRouter')
+const usersRouter = require('./usersRouter')
 
-module.exports = { playersRouter }
+module.exports = { playersRouter, usersRouter }

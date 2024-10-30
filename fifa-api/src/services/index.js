@@ -1,3 +1,4 @@
 const playersService = require('./playersService')
+const userService = require('./userService')
 
-module.exports = { playersService }
+module.exports = { playersService, userService }
