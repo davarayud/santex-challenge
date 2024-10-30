@@ -28,10 +28,18 @@ const User = sequelize.define('User', {
       isEmail: true,
     },
   },
-  password: {
+  passwordHash: {
     type: DataTypes.STRING,
     allowNull: false,
   },
 })
+
+User.prototype.toJSON = function () {
+  let valores = { ...this.get() }
+  delete valores.passwordHash
+  delete valores.createdAt
+  delete valores.updatedAt
+  return valores
+}
 
 module.exports = User

@@ -34,10 +34,9 @@ usersRouter.put('/:id', async (request, response) => {
 
 usersRouter.post('/', async (request, response) => {
   const objUser = request.body
-  console.log(objUser)
   try {
     const newUser = await userService.createUser(objUser)
-    response.status(201).json(newPlayer)
+    response.status(201).json(newUser)
   } catch (error) {
     response.status(500).json({ message: error.message })
   }

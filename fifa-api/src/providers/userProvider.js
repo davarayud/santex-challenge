@@ -20,18 +20,18 @@ const getUser = async (id) => {
   }
 }
 
-const createUser = async (objUser) => {
+const createUser = async (user) => {
   try {
-    const newUser = await User.create(objUser)
+    const newUser = await User.create(user)
     return newUser
   } catch (error) {
     throw error
   }
 }
 
-const updateUser = async ({ id, objUser }) => {
+const updateUser = async ({ id, user }) => {
   try {
-    await User.update(objUser, { where: { id } })
+    await User.update(user, { where: { id } })
     const newUser = await User.findByPk(id)
     if (!newUser) {
       throw new Error('Usuario no encontrado')
