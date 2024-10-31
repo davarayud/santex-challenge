@@ -44,4 +44,22 @@ const updatePlayer = async ({ id, objPlayer }) => {
   }
 }
 
-module.exports = { getPlayers, getPlayer, createPlayer, updatePlayer }
+const getAllPlayers = async (where) => {
+  console.log(where)
+  try {
+    const players = await Player.findAll({
+      where,
+    })
+    return players
+  } catch (error) {
+    throw error
+  }
+}
+
+module.exports = {
+  getPlayers,
+  getPlayer,
+  createPlayer,
+  updatePlayer,
+  getAllPlayers,
+}
