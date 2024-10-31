@@ -5,5 +5,13 @@ const BASE_DE_DATOS = process.env.BASE_DE_DATOS
 const USUARIO_DB = process.env.USUARIO_DB
 const PASSWORD_USUARIO_DB = process.env.PASSWORD_USUARIO_DB
 const HOST = process.env.HOST
+const SECRET_JWT = process.env.SECRET_JWT
 
-module.exports = { PORT, BASE_DE_DATOS, USUARIO_DB, PASSWORD_USUARIO_DB, HOST }
+module.exports = {
+  PORT,
+  BASE_DE_DATOS,
+  USUARIO_DB,
+  PASSWORD_USUARIO_DB,
+  HOST,
+  SECRET_JWT,
+}

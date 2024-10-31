@@ -1,5 +1,7 @@
 const { userProvider } = require('../providers')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const { SECRET_JWT } = require('../utils/config')
 
 const getUsers = async (params) => await userProvider.getUsers(params)
 const getUser = async (params) => await userProvider.getUser(params)
@@ -31,4 +33,35 @@ const createUser = async (objUser) => {
   return await userProvider.createUser(user)
 }
 
-module.exports = { getUsers, getUser, updateUser, createUser }
+const login = async ({ username, password }) => {
+  console.log(username, password)
+
+  const users = await userProvider.getUsers({ username })
+  const user = users[0]
+  if (!user) {
+    throw new Error('Nombre de usuario invalido')
+  }
+
+  const passwordCorrect = await bcrypt.compare(password, user.passwordHash)
+  if (!passwordCorrect) {
+    console.log('pass')
+    throw new Error('Contraseña invalida')
+  }
+
+  const userForToken = {
+    username: user.username,
+    id: user.id,
+  }
+
+  const token = jwt.sign(userForToken, SECRET_JWT)
+
+  return {
+    token,
+    username: user.username,
+    name: user.name,
+    surname: user.surname,
+    email: user.email,
+  }
+}
+
+module.exports = { getUsers, getUser, updateUser, createUser, login }

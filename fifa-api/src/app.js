@@ -1,6 +1,6 @@
 const express = require('express')
 const { PORT } = require('./utils/config')
-const { playersRouter, usersRouter } = require('./routes')
+const { playersRouter, usersRouter, loginRouter } = require('./routes')
 const { initializeDB } = require('./config/dbConfig')
 
 const app = express()
@@ -8,6 +8,7 @@ const app = express()
 app.use(express.json())
 app.use('/api/players', playersRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 const inicializar = async () => {
   await initializeDB()
