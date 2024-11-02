@@ -1,0 +1,25 @@
+GET http://localhost:3003/api/users?username=a
+
+###
+GET http://localhost:3003/api/users/21
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "asdf",
+  "name": "asdf",
+  "surname": "asdf",
+  "email": "asdf@b.com",
+  "password": "1Abcde"
+}
+
+###
+PUT http://localhost:3003/api/users/21
+Content-Type: application/json
+
+{
+  "username": "asdf",
+  "name": "asdk"
+}

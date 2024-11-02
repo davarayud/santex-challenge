@@ -1,5 +1,6 @@
 const playersRouter = require('express').Router()
 const { playersService } = require('../services')
+const { body, query, validationResult } = require('express-validator')
 
 //Listado de jugadores:
 playersRouter.get('/', async (request, response) => {

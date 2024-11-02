@@ -6,13 +6,17 @@ const { SECRET_JWT } = require('../utils/config')
 const getUsers = async (params) => await userProvider.getUsers(params)
 const getUser = async (params) => await userProvider.getUser(params)
 const updateUser = async ({ id, objUser }) => {
-  const user = objUser
+  const { password, username, name, surname, email } = objUser
+  const user = {}
   if (user.password) {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(user.password, saltRounds)
-    delete user.password
-    objUser.passwordHash = passwordHash
+    user.passwordHash = passwordHash
   }
+  if (username) user.username = username
+  if (name) user.name = name
+  if (surname) user.surname = surname
+  if (email) user.email = email
 
   return await userProvider.updateUser({ id, user })
 }
@@ -34,8 +38,6 @@ const createUser = async (objUser) => {
 }
 
 const login = async ({ username, password }) => {
-  console.log(username, password)
-
   const users = await userProvider.getUsers({ username })
   const user = users[0]
   if (!user) {

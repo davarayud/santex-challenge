@@ -1,7 +1,7 @@
 GET http://localhost:3003/api/players
 
 ###
-GET http://localhost:3003/api/players?long_name=Lionel+Andrés+Messi+Cuccittini
+GET http://localhost:3003/api/players?long_name=damian+alfredo+varayud
 
 ###
 GET http://localhost:3003/api/players?limit=2&long_name=Lionel+Andrés+Messi+Cuccittini
@@ -76,4 +76,12 @@ Content-Type: application/json
   "goalkeeping_reflexes": 85,
   "goalkeeping_speed": 58,
   "player_traits": "Solid Player, Leadership, GK Long Throw, Team Player, Comes For Crosses"
+}
+
+###
+PUT  http://localhost:3003/api/players/161584
+Content-Type: application/json
+
+{
+  "fifa_update": "2"
 }

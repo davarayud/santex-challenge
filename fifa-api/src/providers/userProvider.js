@@ -1,6 +1,13 @@
+const { Op } = require('sequelize')
 const { User } = require('../models')
 
-const getUsers = async (where) => {
+const getUsers = async (whereOptions) => {
+  const { username, name, surname, email } = whereOptions
+  const where = {}
+  if (username) where.username = { [Op.like]: `%${username}%` }
+  if (name) where.name = { [Op.like]: `%${name}%` }
+  if (surname) where.surname = { [Op.like]: `%${surname}%` }
+  if (email) where.email = { [Op.like]: `%${email}%` }
   try {
     const users = await User.findAll({
       where,
