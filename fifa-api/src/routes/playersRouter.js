@@ -1,12 +1,23 @@
 const playersRouter = require('express').Router()
 const { playersService } = require('../services')
-const { body, query, validationResult } = require('express-validator')
+const { validationResult } = require('express-validator')
+const {
+  playerPostRules,
+  playerPutRules,
+  playerIdRules,
+  playerGetRules,
+} = require('../utils/expressValidationRules')
 
 //Listado de jugadores:
-playersRouter.get('/', async (request, response) => {
-  const { limit, offset, ...where } = request.query
+playersRouter.get('/', playerGetRules, async (request, response) => {
+  const errors = validationResult(request)
+  if (!errors.isEmpty()) {
+    return response.status('500').json({ error: errors.array() })
+  }
+  const { limit, offset, ...options } = request.query
+
   try {
-    const result = await playersService.getPlayers({ limit, offset, where })
+    const result = await playersService.getPlayers({ limit, offset, options })
     response.json(result)
   } catch (error) {
     response.status(500)
@@ -14,7 +25,11 @@ playersRouter.get('/', async (request, response) => {
 })
 
 //Obtener información de un solo jugador:
-playersRouter.get('/:id', async (request, response) => {
+playersRouter.get('/:id', playerIdRules, async (request, response) => {
+  const errors = validationResult(request)
+  if (!errors.isEmpty()) {
+    return response.status('500').json({ error: errors.array() })
+  }
   const id = request.params.id
   try {
     const result = await playersService.getPlayer(id)
@@ -25,19 +40,31 @@ playersRouter.get('/:id', async (request, response) => {
 })
 
 //Editar la información de un jugador:
-playersRouter.put('/:id', async (request, response) => {
-  const id = request.params.id
-  const objPlayer = request.body
-  try {
-    const newPlayer = await playersService.updatePlayer({ id, objPlayer })
-    response.json(newPlayer)
-  } catch (error) {
-    response.status(500).json({ message: error.message })
+playersRouter.put(
+  '/:id',
+  playerPutRules.concat(playerIdRules),
+  async (request, response) => {
+    const errors = validationResult(request)
+    if (!errors.isEmpty()) {
+      return response.status('500').json({ error: errors.array() })
+    }
+    const id = request.params.id
+    const objPlayer = request.body
+    try {
+      const newPlayer = await playersService.updatePlayer({ id, objPlayer })
+      response.json(newPlayer)
+    } catch (error) {
+      response.status(500).json({ message: error.message })
+    }
   }
-})
+)
 
 //Create a vos como jugador:
-playersRouter.post('/', async (request, response) => {
+playersRouter.post('/', playerPostRules, async (request, response) => {
+  const errors = validationResult(request)
+  if (!errors.isEmpty()) {
+    return response.status('500').json({ error: errors.array() })
+  }
   const objPlayer = request.body
   try {
     const newPlayer = await playersService.createPlayer(objPlayer)

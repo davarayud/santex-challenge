@@ -1,7 +1,7 @@
 GET http://localhost:3003/api/players
 
 ###
-GET http://localhost:3003/api/players?long_name=damian+alfredo+varayud
+GET http://localhost:3003/api/players?fifa_version=1
 
 ###
 GET http://localhost:3003/api/players?limit=2&long_name=Lionel+Andrés+Messi+Cuccittini
@@ -14,7 +14,7 @@ POST http://localhost:3003/api/players
 Content-Type: application/json
 
 {
-  "fifa_version": "23",
+  "fifa_version": "5",
   "fifa_update": "1",
   "player_face_url": "https://cdn.sofifa.net/players/202/811/23_120.png",
   "long_name": "Damian Alfredo Varayud",
@@ -66,7 +66,6 @@ Content-Type: application/json
   "mentality_vision": 66,
   "mentality_penalties": 42,
   "mentality_composure": 60,
-  "defending_marking": null,
   "defending_standing_tackle": 20,
   "defending_sliding_tackle": 20,
   "goalkeeping_diving": 85,
