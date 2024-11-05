@@ -1,0 +1,54 @@
+<form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+  <!-- 
+    fifa_version: new FormControl('23'),
+    long_name: new FormControl(''),
+    player_positions: new FormControl(''),
+    club_name: new FormControl(''),
+    nationality_name: new FormControl(''),
+  -->
+  <ul>
+    <li>
+      <label>
+        Version de fifa:
+        <input type="text" id="fifa_version" formControlName="fifa_version" />
+      </label>
+    </li>
+    <li>
+      <label>
+        nombre:
+        <input
+          type="text"
+          id="long_name"
+          formControlName="long_name"
+          label="long_name"
+        />
+      </label>
+    </li>
+    <li>
+      <label>
+        posición:
+        <input
+          type="text"
+          id="player_positions"
+          formControlName="player_positions"
+        />
+      </label>
+    </li>
+    <li>
+      <label>
+        Club: <input type="text" id="club_name" formControlName="club_name"
+      /></label>
+    </li>
+    <li>
+      <label>
+        Nacionalidad:
+        <input
+          type="text"
+          id="nationality_name"
+          formControlName="nationality_name"
+        />
+      </label>
+    </li>
+  </ul>
+  <button>Filtrar</button>
+</form>

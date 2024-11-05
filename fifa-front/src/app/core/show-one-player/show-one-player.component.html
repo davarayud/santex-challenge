@@ -1,0 +1,86 @@
+<div class="container">
+  <section class="head">
+    <img src="{{ player.player_face_url }}" alt="" />
+    <ul>
+      <li>
+        <h3>{{ player.overall }}</h3>
+      </li>
+      <li *ngFor="let position of positions">
+        <h4>{{ position }}</h4>
+      </li>
+    </ul>
+  </section>
+  <section class="name">
+    <h1>{{ player.long_name }}</h1>
+  </section>
+  <section class="tables">
+    <table class="left">
+      <tbody>
+        <td>
+          <tr>
+            {{
+              player.pace
+            }}
+          </tr>
+          <tr>
+            {{
+              player.shooting
+            }}
+          </tr>
+          <tr>
+            {{
+              player.passing
+            }}
+          </tr>
+        </td>
+        <td>
+          <tr>
+            RIT
+          </tr>
+          <tr>
+            TIR
+          </tr>
+          <tr>
+            PAS
+          </tr>
+        </td>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+        <td>
+          <tr>
+            {{
+              player.dribbling
+            }}
+          </tr>
+          <tr>
+            {{
+              player.defending
+            }}
+          </tr>
+          <tr>
+            {{
+              player.physic
+            }}
+          </tr>
+        </td>
+        <td>
+          <tr>
+            REG
+          </tr>
+          <tr>
+            DEF
+          </tr>
+          <tr>
+            FIS
+          </tr>
+        </td>
+      </tbody>
+    </table>
+  </section>
+  <ul class="data">
+    <li>Nac: {{ player.nationality_name }}</li>
+    <li>Club: {{ player.club_name }}</li>
+  </ul>
+</div>
