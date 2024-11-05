@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const { PORT } = require('./utils/config')
 const {
   playersRouter,
@@ -10,6 +11,7 @@ const { initializeDB } = require('./config/dbConfig')
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 app.use('/api/players', playersRouter)
 app.use('/api/users', usersRouter)
