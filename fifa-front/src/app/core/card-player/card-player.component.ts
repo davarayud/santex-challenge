@@ -1,0 +1,83 @@
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { PlayerInterface } from '../../interfaces/player.interface';
+import { RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-card-player',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  templateUrl: './card-player.component.html',
+  styleUrl: './card-player.component.scss',
+})
+export class CardPlayerComponent implements OnInit {
+  @Input() player: PlayerInterface = {
+    id: 0,
+    fifa_version: '1',
+    fifa_update: '1',
+    player_face_url: '1',
+    long_name: '1',
+    player_positions: '1',
+    club_name: '',
+    nationality_name: '',
+    overall: 0,
+    potential: 0,
+    value_eur: 0,
+    wage_eur: 0,
+    age: 0,
+    height_cm: 0,
+    weight_kg: 0,
+    preferred_foot: '',
+    weak_foot: 0,
+    skill_moves: 0,
+    international_reputation: 0,
+    work_rate: '',
+    body_type: '',
+    pace: 0,
+    shooting: 0,
+    passing: 0,
+    dribbling: 0,
+    defending: 0,
+    physic: 0,
+    attacking_crossing: 0,
+    attacking_finishing: 0,
+    attacking_heading_accuracy: 0,
+    attacking_short_passing: 0,
+    attacking_volleys: 0,
+    skill_dribbling: 0,
+    skill_curve: 0,
+    skill_fk_accuracy: 0,
+    skill_long_passing: 0,
+    skill_ball_control: 0,
+    movement_acceleration: 0,
+    movement_sprint_speed: 0,
+    movement_agility: 0,
+    movement_reactions: 0,
+    movement_balance: 0,
+    power_shot_power: 0,
+    power_jumping: 0,
+    power_stamina: 0,
+    power_strength: 0,
+    power_long_shots: 0,
+    mentality_aggression: 0,
+    mentality_interceptions: 0,
+    mentality_positioning: 0,
+    mentality_vision: 0,
+    mentality_penalties: 0,
+    mentality_composure: 0,
+    defending_marking: 0,
+    defending_standing_tackle: 0,
+    defending_sliding_tackle: 0,
+    goalkeeping_diving: 0,
+    goalkeeping_handling: 0,
+    goalkeeping_kicking: 0,
+    goalkeeping_positioning: 0,
+    goalkeeping_reflexes: 0,
+    goalkeeping_speed: 0,
+    player_traits: '',
+  };
+  positions = [''];
+  ngOnInit() {
+    this.positions = this.player.player_positions.split(',');
+  }
+}

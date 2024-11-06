@@ -1,4 +1,13 @@
-div {
+.container {display: flex;
+  flex-direction: row;
+}
+
+.lateral{
+  width: 200px;
+}
+
+.players {
+  padding: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

@@ -1,7 +1,24 @@
-<app-filter></app-filter>
-<div>
-  <app-show-one-player
-    *ngFor="let player of players"
-    [player]="player"
-  ></app-show-one-player>
+<div class="container">
+  <div class="lateral">
+    <app-filter></app-filter>
+    <section>
+      <h4>Page: {{ currentPage }}</h4>
+      <button type="button" (click)="prevPage()" *ngIf="showButtonPage.prev">
+        Anterior
+      </button>
+      <button type="button" (click)="nextPage()" *ngIf="showButtonPage.next">
+        Siguiente
+      </button>
+      <div>
+        <app-download-csv></app-download-csv>
+      </div>
+    </section>
+  </div>
+
+  <div class="players">
+    <app-card-player
+      *ngFor="let player of players"
+      [player]="player"
+    ></app-card-player>
+  </div>
 </div>
