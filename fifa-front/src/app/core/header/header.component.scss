@@ -1,0 +1,27 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #343f44;
+}
+
+.menu{
+  flex-grow: 2;
+  color: #343f44;
+  margin-left: 80px;
+}
+
+.menu ul {
+  list-style-type: none;
+  display: flex;
+}
+
+.menu li{
+  margin-right: 30px;
+  font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+ }

@@ -1,0 +1,12 @@
+<header>
+  <h1>FIFA APP</h1>
+  <nav class="menu">
+    <ul>
+      <li *ngFor="let elemento of elementosMenu">
+        <a routerLink="{{ elemento.path }}">
+          {{ elemento.title }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
