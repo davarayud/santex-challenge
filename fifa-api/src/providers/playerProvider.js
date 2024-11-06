@@ -13,7 +13,8 @@ const getPlayers = async ({ limit = 10, offset = 0, options }) => {
   const where = {}
   if (fifa_version) where.fifa_version = fifa_version
   if (long_name) where.long_name = { [Op.like]: `%${long_name}%` }
-  if (player_positions) where.player_positions = player_positions
+  if (player_positions)
+    where.player_positions = { [Op.like]: `%${player_positions}%` }
   if (club_name) where.club_name = { [Op.like]: `%${club_name}%` }
   if (nationality_name)
     where.nationality_name = { [Op.like]: `%${nationality_name}%` }
