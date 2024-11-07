@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterOptionsInterface } from '../interfaces/filterOptions.interface';
+import { PlayerInterface } from '../interfaces/player.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -32,5 +33,10 @@ export class PlayersService {
 
   getOnePlayer(id: string): Observable<any> {
     return this.httpClient.get(`${this.API_URL}/${id}`);
+  }
+
+  createPlayer(playerToCreate: PlayerInterface): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post(this.API_URL, playerToCreate);
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlayerInterface } from '../../interfaces/player.interface';
 import { ActivatedRoute } from '@angular/router';
 import { PlayersService } from '../../service/players.service';
-import { SkillsChartComponent } from '../../skills-chart/skills-chart.component';
+import { SkillsChartComponent } from '../skills-chart/skills-chart.component';
 
 @Component({
   selector: 'app-show-one-player',
