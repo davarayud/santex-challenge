@@ -1,0 +1,39 @@
+<h2>Modifica el jugador:</h2>
+
+<form [formGroup]="inputPlayer" (ngSubmit)="onSubmit()">
+  <ul>
+    <li>
+      Version de Fifa: <br />
+      {{ playerToUpdate.fifa_version }}
+    </li>
+    <li *ngFor="let input of listOfInputs1">
+      <label for="{{ input.formControl }}">{{ input.texto }}:</label><br />
+      <input
+        type="{{ input.type }}"
+        id="{{ input.formControl }}"
+        formControlName="{{ input.formControl }}"
+        placeholder="{{ input.texto }}"
+        required
+      />
+      <div *ngIf="showErrors && inputPlayer.get(input.formControl)?.errors">
+        <span>*{{ input.error }}</span>
+      </div>
+    </li>
+  </ul>
+  <ul>
+    <li *ngFor="let input of listOfInputs2">
+      <label for="{{ input.formControl }}">{{ input.texto }}:</label><br />
+      <input
+        type="{{ input.type }}"
+        id="{{ input.formControl }}"
+        formControlName="{{ input.formControl }}"
+        placeholder="{{ input.texto }}"
+        required
+      />
+      <div *ngIf="showErrors && inputPlayer.get(input.formControl)?.errors">
+        <span>*{{ input.error }}</span>
+      </div>
+    </li>
+    <button>Modificar jugador</button>
+  </ul>
+</form>

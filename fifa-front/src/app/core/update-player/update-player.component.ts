@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,19 +8,19 @@ import {
 } from '@angular/forms';
 import { PlayerInterface } from '../../interfaces/player.interface';
 import { PlayersService } from '../../service/players.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-create-player',
+  selector: 'app-update-player',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './create-player.component.html',
-  styleUrl: './create-player.component.scss',
+  templateUrl: './update-player.component.html',
+  styleUrl: './update-player.component.scss',
 })
-export class CreatePlayerComponent {
+export class UpdatePlayerComponent implements OnInit {
   showErrors = false;
-
-  playerToCreate: PlayerInterface = {
+  playerId = '';
+  playerToUpdate: PlayerInterface = {
     fifa_version: '23',
     fifa_update: '1',
     player_face_url: '',
@@ -31,7 +31,46 @@ export class CreatePlayerComponent {
     age: 0,
   };
 
-  constructor(private playerService: PlayersService, private router: Router) {}
+  constructor(
+    private playerService: PlayersService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) this.playerId = id;
+    this.getOnePlayer();
+  }
+
+  getOnePlayer() {
+    this.playerService.getOnePlayer(this.playerId).subscribe({
+      next: (result) => {
+        this.playerToUpdate = result;
+        this.inputPlayer.setValue({
+          player_face_url: this.playerToUpdate.player_face_url,
+          long_name: this.playerToUpdate.long_name,
+          player_positions: this.playerToUpdate.player_positions,
+          club_name: this.playerToUpdate.club_name || '',
+          nationality_name: this.playerToUpdate.nationality_name || '',
+          preferred_foot: this.playerToUpdate.preferred_foot || '',
+          skill_moves: this.playerToUpdate.skill_moves || null,
+          overall: this.playerToUpdate.overall,
+          potential: this.playerToUpdate.potential,
+          age: this.playerToUpdate.age,
+          pace: this.playerToUpdate.pace || null,
+          shooting: this.playerToUpdate.shooting || null,
+          passing: this.playerToUpdate.passing || null,
+          dribbling: this.playerToUpdate.defending || null,
+          defending: this.playerToUpdate.defending || null,
+          physic: this.playerToUpdate.physic || null,
+        });
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
 
   listOfInputs1: {
     formControl: string;
@@ -39,12 +78,6 @@ export class CreatePlayerComponent {
     type: string;
     error: string;
   }[] = [
-    {
-      formControl: 'fifa_version',
-      texto: 'Version de Fifa',
-      type: 'text',
-      error: 'Campo obligatorio',
-    },
     {
       formControl: 'player_face_url',
       texto: 'URL del retrato',
@@ -151,7 +184,6 @@ export class CreatePlayerComponent {
   ];
 
   inputPlayer = new FormGroup({
-    fifa_version: new FormControl('23', [Validators.required]),
     player_face_url: new FormControl('', [
       Validators.required,
       Validators.pattern(/https?:\/\/\S+\.\S+/),
@@ -177,52 +209,52 @@ export class CreatePlayerComponent {
       Validators.required,
       Validators.maxLength(255),
     ]),
-    skill_moves: new FormControl(null, [
+    skill_moves: new FormControl(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(5),
     ]),
-    overall: new FormControl(null, [
+    overall: new FormControl(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(99),
     ]),
-    potential: new FormControl(null, [
+    potential: new FormControl(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(99),
     ]),
-    age: new FormControl(null, [
+    age: new FormControl(0, [
       Validators.required,
       Validators.min(12),
       Validators.max(60),
     ]),
-    pace: new FormControl(null, [
+    pace: new FormControl(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(99),
     ]),
-    shooting: new FormControl(null, [
+    shooting: new FormControl(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(99),
     ]),
-    passing: new FormControl(null, [
+    passing: new FormControl(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(99),
     ]),
-    dribbling: new FormControl(null, [
+    dribbling: new FormControl(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(99),
     ]),
-    defending: new FormControl(null, [
+    defending: new FormControl(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(99),
     ]),
-    physic: new FormControl(null, [
+    physic: new FormControl(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(99),
@@ -234,9 +266,9 @@ export class CreatePlayerComponent {
       this.showErrors = true;
     } else {
       const inputs = this.inputPlayer.value;
-      this.playerToCreate = {
-        fifa_version: inputs.fifa_version || '',
-        fifa_update: '1',
+      this.playerToUpdate = {
+        fifa_version: this.playerToUpdate.fifa_version,
+        fifa_update: (Number(this.playerToUpdate.fifa_update) + 1).toString(),
         player_face_url: inputs.player_face_url || '',
         long_name: inputs.long_name || '',
         player_positions: inputs.player_positions || '',
@@ -254,14 +286,17 @@ export class CreatePlayerComponent {
         defending: inputs.defending || 0,
         physic: inputs.physic || 0,
       };
-      this.playerService.createPlayer(this.playerToCreate).subscribe({
-        next: (result) => {
-          this.router.navigate([`/players/${result.id}`]);
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
+
+      this.playerService
+        .updatePlayer(this.playerId, this.playerToUpdate)
+        .subscribe({
+          next: (result) => {
+            this.router.navigate([`/players/${result.id}`]);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        });
     }
   }
 }

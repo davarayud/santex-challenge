@@ -26,7 +26,6 @@ export class SkillsChartComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log('algo', this.NamePlayer);
     this.createRadarChart();
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerInterface } from '../../interfaces/player.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PlayersService } from '../../service/players.service';
 import { SkillsChartComponent } from '../skills-chart/skills-chart.component';
 
@@ -28,6 +28,7 @@ export class ShowOnePlayerComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private playersService: PlayersService
   ) {}
 
@@ -56,5 +57,9 @@ export class ShowOnePlayerComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  editar() {
+    this.router.navigate([`/update/${this.player.id}`]);
   }
 }
