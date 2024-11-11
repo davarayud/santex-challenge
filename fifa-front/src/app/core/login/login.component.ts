@@ -9,6 +9,8 @@ import {
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
 import { UserLoginInterface } from '../../interfaces/userLogin';
+import { PlayersService } from '../../service/players.service';
+import { CsvDownloadService } from '../../service/csv-players.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,12 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private router: Router, private loginService: LoginService) {}
+  constructor(
+    private router: Router,
+    private loginService: LoginService,
+    private playersService: PlayersService,
+    private csvService: CsvDownloadService
+  ) {}
 
   onSubmit() {
     if (!this.loginForm.invalid) {
@@ -34,7 +41,9 @@ export class LoginComponent {
       if (inputValue.username) this.userToLogin.username = inputValue.username;
       if (inputValue.password) this.userToLogin.password = inputValue.password;
       this.loginService.loginUser(this.userToLogin).subscribe({
-        next: () => {
+        next: (result) => {
+          this.playersService.setToken(result.token);
+          this.csvService.setToken(result.token);
           this.router.navigate(['/players']);
         },
         error: (error) => {

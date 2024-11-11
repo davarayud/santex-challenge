@@ -8,13 +8,13 @@ import { FilterOptionsInterface } from '../interfaces/filterOptions.interface';
 })
 export class CsvDownloadService {
   API_URL = 'http://localhost:3003/api/csv';
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: '',
+  });
   constructor(private httpClient: HttpClient) {}
 
   getPlayers(filterOptions: FilterOptionsInterface): Observable<Blob> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
     let queryURL = `${this.API_URL}?`;
     if (filterOptions.fifa_version !== 'All')
       queryURL = `${queryURL}&fifa_version=${filterOptions.fifa_version}`;
@@ -27,6 +27,16 @@ export class CsvDownloadService {
     if (filterOptions.nationality_name)
       queryURL = `${queryURL}&nationality_name=${filterOptions.nationality_name}`;
 
-    return this.httpClient.get(queryURL, { headers, responseType: 'blob' });
+    return this.httpClient.get(queryURL, {
+      headers: this.headers,
+      responseType: 'blob',
+    });
+  }
+
+  setToken(token: string) {
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    });
   }
 }

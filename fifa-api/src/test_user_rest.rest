@@ -23,3 +23,13 @@ Content-Type: application/json
   "username": "asdf",
   "name": "asdk"
 }
+
+###
+
+POST  http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "prueba",
+  "password": "1Abcde"
+}

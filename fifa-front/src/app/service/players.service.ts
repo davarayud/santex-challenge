@@ -9,6 +9,10 @@ import { PlayerInterface } from '../interfaces/player.interface';
 })
 export class PlayersService {
   API_URL = 'http://localhost:3003/api/players';
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: '',
+  });
   constructor(private httpClient: HttpClient) {}
 
   getPlayers(filterOptions: FilterOptionsInterface): Observable<any> {
@@ -24,20 +28,34 @@ export class PlayersService {
     if (filterOptions.nationality_name)
       queryURL = `${queryURL}&nationality_name=${filterOptions.nationality_name}`;
 
-    return this.httpClient.get(queryURL).pipe((res) => res);
+    return this.httpClient
+      .get(queryURL, { headers: this.headers })
+      .pipe((res) => res);
   }
 
   getOnePlayer(id: string): Observable<any> {
-    return this.httpClient.get(`${this.API_URL}/${id}`);
+    return this.httpClient.get(`${this.API_URL}/${id}`, {
+      headers: this.headers,
+    });
   }
 
   createPlayer(playerToCreate: PlayerInterface): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.post(this.API_URL, playerToCreate);
+    return this.httpClient.post(this.API_URL, playerToCreate, {
+      headers: this.headers,
+    });
   }
 
   updatePlayer(id: string, playerToUpdate: PlayerInterface): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.put(`${this.API_URL}/${id}`, playerToUpdate);
+    return this.httpClient.put(`${this.API_URL}/${id}`, playerToUpdate, {
+      headers: this.headers,
+    });
+  }
+
+  setToken(token: string) {
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
+    });
   }
 }
