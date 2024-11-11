@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const { PORT } = require('./utils/config')
+const { tokenValidation } = require('./middleware/tokenValidation')
 const {
   playersRouter,
   usersRouter,
@@ -13,10 +14,10 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use('/api/players', playersRouter)
+app.use('/api/players', tokenValidation, playersRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
-app.use('/api/csv', csvRouter)
+app.use('/api/csv', tokenValidation, csvRouter)
 
 const inicializar = async () => {
   await initializeDB()

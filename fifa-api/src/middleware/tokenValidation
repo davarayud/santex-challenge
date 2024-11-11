@@ -1,0 +1,18 @@
+const jwt = require('jsonwebtoken')
+const { getUser } = require('../services/userService')
+const { SECRET_JWT } = require('../utils/config')
+
+const tokenValidation = async (request, response, next) => {
+  const authorization = request.header('authorization')
+  if (authorization && authorization.startsWith('Bearer')) {
+    const token = authorization.replace('Bearer ', '')
+    const decodedToken = jwt.verify(token, SECRET_JWT)
+    if (!decodedToken) response.status(401).json({ error: 'token invalido' })
+    const user = await getUser(decodedToken.id)
+    request.user = user
+    next()
+  }
+  response.status(401).json({ error: 'token invalido' })
+}
+
+module.exports = { tokenValidation }
