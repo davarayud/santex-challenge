@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../service/login.service';
 import { UserLoginInterface } from '../../interfaces/userLogin';
 import { PlayersService } from '../../service/players.service';
@@ -15,7 +15,7 @@ import { CsvDownloadService } from '../../service/csv-players.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

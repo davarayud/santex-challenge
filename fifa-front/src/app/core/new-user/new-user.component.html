@@ -1,0 +1,17 @@
+<form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+  <ul>
+    <li *ngFor="let input of listOfInputs">
+      <label for="{{ input.formControl }}">{{ input.texto }}:</label><br />
+      <input
+        type="{{ input.type }}"
+        id="{{ input.formControl }}"
+        formControlName="{{ input.formControl }}"
+        placeholder="{{ input.texto }}"
+        required
+      />
+    </li>
+  </ul>
+  <div *ngIf="error.show">{{ error.msg }}</div>
+  <button [disabled]="inputForm.invalid">Ingresar</button>
+</form>
+<a routerLink="/new-user">Crear usuario</a>

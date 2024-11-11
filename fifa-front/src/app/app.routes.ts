@@ -5,6 +5,7 @@ import { CreatePlayerComponent } from './core/create-player/create-player.compon
 import { UpdatePlayerComponent } from './core/update-player/update-player.component';
 import { LoginComponent } from './core/login/login.component';
 import { AuthGuard } from './Auth.guard';
+import { NewUserComponent } from './core/new-user/new-user.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'new-user',
+    component: NewUserComponent,
   },
   {
     path: '',

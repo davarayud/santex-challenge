@@ -10,5 +10,6 @@
     </li>
   </ul>
   <div *ngIf="error.show">{{ error.msg }}</div>
-  <button [disabled]="loginForm.invalid">Login</button>
+  <button [disabled]="loginForm.invalid">Ingresar</button>
 </form>
+<a routerLink="/new-user">Crear usuario</a>
